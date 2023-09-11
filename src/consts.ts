@@ -7,3 +7,12 @@ export const promoFilm = {
   genre: 'Drama',
   dateRelease: 2014
 };
+
+export const AppRoute = {
+  Main: '/',
+  SignIn: '/login',
+  MyList: '/mylist',
+  Film: '/films/:id',
+  AddReview: '/films/:id/review',
+  Player: '/player/:id'
+} as const;
