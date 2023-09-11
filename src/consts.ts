@@ -17,3 +17,9 @@ export const AppRoute = {
   Player: '/player/:id',
   NotFound: '*'
 } as const;
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
+}

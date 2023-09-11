@@ -7,8 +7,9 @@ import PlayerScreen from '../../pages/player-screen/player-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { TPromoFilm } from '../../types/promo-film';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute } from '../../consts';
+import { AppRoute, AuthorizationStatus } from '../../consts';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -38,7 +39,11 @@ function App({cardsCount, promoFilm}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.MyList}
-            element={<MyListScreen />}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <MyListScreen />
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Player}
