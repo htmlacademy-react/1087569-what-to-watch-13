@@ -1,6 +1,7 @@
 import MainCard from '../../components/main-card/main-card';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
+import { Helmet } from 'react-helmet-async';
 import { TPromoFilm } from '../../types/promo-film';
 
 type MainPageProps = {
@@ -12,6 +13,9 @@ function MainScreen({cardsCount, promoFilm}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
+        <Helmet>
+          <title>Главная страница</title>
+        </Helmet>
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
         </div>

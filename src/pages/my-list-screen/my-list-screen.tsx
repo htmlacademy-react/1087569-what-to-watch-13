@@ -1,9 +1,13 @@
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
+import { Helmet } from 'react-helmet-async';
 
 function MyListScreen(): JSX.Element {
   return (
     <div className="user-page">
+      <Helmet>
+        <title>Мои фильмы</title>
+      </Helmet>
       <header className="page-header user-page__head">
         <Logo />
 

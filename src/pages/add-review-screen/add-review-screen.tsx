@@ -1,8 +1,12 @@
 import Logo from '../../components/logo/logo';
+import { Helmet } from 'react-helmet-async';
 
 function AddReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
+      <Helmet>
+        <title>Отзыв о фильме</title>
+      </Helmet>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
