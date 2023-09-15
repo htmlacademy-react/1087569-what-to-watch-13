@@ -58,3 +58,34 @@ export const films: TFilm[] = [
     genre: 'thriller'
   }
 ];
+
+export const favoriteFilms: TFilm[] = [
+  {
+    id: '5',
+    name: 'Scary Movie',
+    previewImage: 'https://m.media-amazon.com/images/M/MV5BMGEzZjdjMGQtZmYzZC00N2I4LThiY2QtNWY5ZmQ3M2ExZmM4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+    previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+    genre: 'comedy'
+  },
+  {
+    id: '6',
+    name: 'Shotgun Wedding',
+    previewImage: 'https://media.kg-portal.ru/movies/s/shotgunwedding/posters/shotgunwedding_1t.jpg',
+    previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+    genre: 'comedy'
+  },
+  {
+    id: '7',
+    name: 'The Cabin in the Woods',
+    previewImage: 'https://ic.pics.livejournal.com/tanjand/44781189/95329322/95329322_original.jpg',
+    previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+    genre: 'horror'
+  },
+  {
+    id: '8',
+    name: 'Crash',
+    previewImage: 'https://www.film.ru/sites/default/files/styles/thumb_260x400/public/movies/posters/50410659-2360786.jpeg',
+    previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+    genre: 'thriller'
+  }
+];

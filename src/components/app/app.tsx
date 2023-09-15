@@ -14,10 +14,11 @@ import { TFilm } from '../../types/film';
 
 type AppScreenProps = {
   films: TFilm[];
+  favoriteFilms: TFilm[];
   promoFilm: TPromoFilm;
 }
 
-function App({films, promoFilm}: AppScreenProps): JSX.Element {
+function App({films, favoriteFilms, promoFilm}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -41,8 +42,8 @@ function App({films, promoFilm}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <MyListScreen />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <MyListScreen favoriteFilms={favoriteFilms} />
               </PrivateRoute>
             }
           />
