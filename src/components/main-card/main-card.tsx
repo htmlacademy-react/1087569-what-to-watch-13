@@ -1,15 +1,23 @@
 import { TFilm } from '../../types/film';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../consts';
+import { MouseEvent } from 'react';
 
 type MainCardProps = {
   film: TFilm;
+  onMouseEnterHandler: (event: MouseEvent<HTMLElement>) => void;
+  onMouseLeaveHandler: () => void;
 }
 
-function MainCard({film}: MainCardProps): JSX.Element {
+function MainCard({film, onMouseEnterHandler, onMouseLeaveHandler}: MainCardProps): JSX.Element {
   const {id, name, previewImage} = film;
   return (
-    <article className="small-film-card catalog__films-card">
+    <article
+      className="small-film-card catalog__films-card"
+      data-id={id}
+      onMouseEnter={onMouseEnterHandler}
+      onMouseLeave={onMouseLeaveHandler}
+    >
       <div className="small-film-card__image">
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>
