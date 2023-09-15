@@ -1,4 +1,4 @@
-export type TPromoFilm ={
+export type TPromoFilm = {
   name: string;
   genre: string;
   dateRelease: number;
