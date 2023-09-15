@@ -54,7 +54,7 @@ function App({films, favoriteFilms, detailFilms, promoFilm}: AppScreenProps): JS
           />
           <Route
             path={AppRoute.Player}
-            element={<PlayerScreen />}
+            element={<PlayerScreen films={detailFilms} />}
           />
           <Route
             path={AppRoute.NotFound}

@@ -1,12 +1,21 @@
 import { Helmet } from 'react-helmet-async';
+import { TFilmDetail } from '../../types/film';
+import { useParams } from 'react-router-dom';
 
-function PlayerScreen(): JSX.Element {
+type PlayerScreenProps = {
+  films: TFilmDetail[];
+}
+
+function PlayerScreen({films}: PlayerScreenProps): JSX.Element {
+  const {id} = useParams();
+  const film = films.find((detailfilm) => detailfilm.id === id) as TFilmDetail;
+
   return(
     <div className="player">
       <Helmet>
         <title>Просмотр</title>
       </Helmet>
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src="#" className="player__video" poster={film.posterImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
