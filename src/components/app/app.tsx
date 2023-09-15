@@ -16,10 +16,11 @@ type AppScreenProps = {
   films: TFilm[];
   favoriteFilms: TFilm[];
   detailFilms: TFilmDetail[];
+  similarFilms: TFilm[];
   promoFilm: TPromoFilm;
 }
 
-function App({films, favoriteFilms, detailFilms, promoFilm}: AppScreenProps): JSX.Element {
+function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -34,7 +35,7 @@ function App({films, favoriteFilms, detailFilms, promoFilm}: AppScreenProps): JS
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen />}
+            element={<FilmScreen similarFilms={similarFilms} detailFilms={detailFilms}/>}
           />
           <Route
             path={AppRoute.SignIn}
