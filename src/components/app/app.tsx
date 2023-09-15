@@ -10,22 +10,27 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../consts';
-import { TFilm } from '../../types/film';
+import { TFilm, TFilmDetail } from '../../types/film';
 
 type AppScreenProps = {
   films: TFilm[];
   favoriteFilms: TFilm[];
+  detailFilms: TFilmDetail[];
   promoFilm: TPromoFilm;
 }
 
-function App({films, favoriteFilms, promoFilm}: AppScreenProps): JSX.Element {
+function App({films, favoriteFilms, detailFilms, promoFilm}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.AddReview}
-            element={<AddReviewScreen />}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <AddReviewScreen films={detailFilms} />
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Film}
