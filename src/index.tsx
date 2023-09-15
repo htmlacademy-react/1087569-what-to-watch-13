@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { Setting, promoFilm } from './consts';
+import { promoFilm } from './consts';
+import { films } from './mocks/films';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,7 +11,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      cardsCount={Setting.CardsCount}
+      films={films}
       promoFilm={promoFilm}
     />
   </React.StrictMode>

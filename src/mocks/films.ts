@@ -32,7 +32,7 @@ export const films: TFilm[] = [
   {
     id: '5',
     name: 'Scary Movie',
-    previewImage: 'https://b1.filmpro.ru/c/5730.jpg',
+    previewImage: 'https://m.media-amazon.com/images/M/MV5BMGEzZjdjMGQtZmYzZC00N2I4LThiY2QtNWY5ZmQ3M2ExZmM4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
     previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
     genre: 'comedy'
   },

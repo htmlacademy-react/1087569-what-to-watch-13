@@ -1,15 +1,16 @@
-import MainCard from '../../components/main-card/main-card';
+import CardsList from '../../components/cards-list/cards-list';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import { Helmet } from 'react-helmet-async';
 import { TPromoFilm } from '../../types/promo-film';
+import { TFilm } from '../../types/film';
 
 type MainPageProps = {
-  cardsCount: number;
+  films: TFilm[];
   promoFilm: TPromoFilm;
 }
 
-function MainScreen({cardsCount, promoFilm}: MainPageProps): JSX.Element {
+function MainScreen({films, promoFilm}: MainPageProps): JSX.Element {
   return (
     <>
       <section className="film-card">
@@ -107,9 +108,7 @@ function MainScreen({cardsCount, promoFilm}: MainPageProps): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {Array.from({length:cardsCount}, (_item, index) => index).map((i) => <MainCard key={i}/>)}
-          </div>
+          <CardsList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

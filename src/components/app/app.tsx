@@ -10,13 +10,14 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../consts';
+import { TFilm } from '../../types/film';
 
 type AppScreenProps = {
-  cardsCount: number;
+  films: TFilm[];
   promoFilm: TPromoFilm;
 }
 
-function App({cardsCount, promoFilm}: AppScreenProps): JSX.Element {
+function App({films, promoFilm}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -35,7 +36,7 @@ function App({cardsCount, promoFilm}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.Main}
-            element={<MainScreen cardsCount={cardsCount} promoFilm={promoFilm}/>}
+            element={<MainScreen films={films} promoFilm={promoFilm}/>}
           />
           <Route
             path={AppRoute.MyList}
