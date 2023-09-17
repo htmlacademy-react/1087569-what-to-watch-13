@@ -7,7 +7,7 @@ type CardsListProps = {
 }
 
 function CardsList({films}: CardsListProps): JSX.Element {
-  const [/*activeCard*/, setActiveCard] = useState<TFilm | undefined>(undefined);
+  const [activeCard, setActiveCard] = useState<TFilm | undefined>(undefined);
 
   const handleMouseEnterItem = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -21,9 +21,17 @@ function CardsList({films}: CardsListProps): JSX.Element {
 
   return(
     <div className="catalog__films-list">
-      {films.map((film) =>
-        <MainCard key={film.id} film={film} onMouseEnterHandler={handleMouseEnterItem} onMouseLeaveHandler={handleMouseLeaveItem}/>
-      )}
+      {
+        films.map((film) => (
+          <MainCard
+            key={film.id}
+            film={film}
+            onMouseEnterHandler={handleMouseEnterItem}
+            onMouseLeaveHandler={handleMouseLeaveItem}
+            isActive={activeCard?.id === film.id}
+          />
+        ))
+      }
     </div>
   );
 }
