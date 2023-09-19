@@ -1,6 +1,6 @@
 import { TFilm } from '../../types/film';
 import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AppRoute, TIMER_VIDEO } from '../../consts';
 import { MouseEvent, useEffect, useState } from 'react';
 import VideoPlayer from '../video-player/video-player';
 
@@ -20,7 +20,7 @@ function MainCard({film, onMouseEnterHandler, onMouseLeaveHandler, isActive}: Ma
       return;
     }
 
-    const timer = setTimeout(() => setActivePlayer(true), 1000);
+    const timer = setTimeout(() => setActivePlayer(true), TIMER_VIDEO);
 
     return () => {
       clearTimeout(timer);

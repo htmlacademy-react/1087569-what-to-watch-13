@@ -40,4 +40,12 @@ export const formatFilmRunTime = (runTime: TFilmDetail['runTime']) => {
   return `${runTime}m`;
 };
 
+export const upperCaseFirst = (str: string) => {
+  if (!str) {
+    return str;
+  }
+
+  return str[0].toUpperCase() + str.slice(1);
+};
+
 export const formatReviewDate = (reviewDate: TComment['date']) => reviewDate ? dayjs(reviewDate).format(DATE_REVIEW_FORMAT) : '';

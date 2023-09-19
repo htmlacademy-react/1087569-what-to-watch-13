@@ -20,4 +20,10 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export const TABS = ['Overview', 'Details', 'Reviews'];
+export const TIMER_VIDEO = 1000;
+
+export const Tabs = {
+  Overview: 'overview',
+  Details: 'details',
+  Reviews: 'reviews'
+} as const;

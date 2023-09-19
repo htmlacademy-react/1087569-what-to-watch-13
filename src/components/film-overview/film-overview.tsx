@@ -23,7 +23,12 @@ function FilmOverview({film}: FilmOverviewProps): JSX.Element {
 
         <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="film-card__starring"><strong>Starring: {starring.map((star, index) => starring.length === ++index ? star : `${star}, `)} and other</strong></p>
+        <p className="film-card__starring">
+          <strong>
+            Starring: {starring.join(', ')}
+            {starring.length > 4 ? ' and other' : ''}
+          </strong>
+        </p>
       </div>
     </>
   );

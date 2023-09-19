@@ -1,17 +1,12 @@
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import Tabs from '../../components/tabs/tabs';
-import FilmOverview from '../../components/film-overview/film-overview';
-import FilmDetails from '../../components/film-details/film-details';
-import FilmReviews from '../../components/film-reviews/film-reviews';
 import CardsList from '../../components/cards-list/cards-list';
+import TabsList from '../../components/tabs-list/tabs-list';
 import { Helmet } from 'react-helmet-async';
 import { TFilm, TFilmDetail } from '../../types/film';
 import { useParams } from 'react-router-dom';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { useState, MouseEvent } from 'react';
-import { TABS } from '../../consts';
 import { TComment } from '../../types/comment';
 
 type FilmScreenProps = {
@@ -22,12 +17,8 @@ type FilmScreenProps = {
 
 function FilmScreen({similarFilms, detailFilms, comments}: FilmScreenProps): JSX.Element {
   const {id} = useParams();
-  const [activeTab, setActiveTab] = useState(TABS[0]);
   const film = detailFilms.find((detailfilm) => detailfilm.id === id) as TFilmDetail;
   const {name, posterImage, backgroundImage, genre, released} = film;
-  const handleTabClick = (evt: MouseEvent<HTMLElement>) => {
-    setActiveTab(evt.currentTarget.innerText);
-  };
 
   return (
     <>
@@ -91,14 +82,8 @@ function FilmScreen({similarFilms, detailFilms, comments}: FilmScreenProps): JSX
               <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
-            <div className="film-card__desc">
-              <Tabs filmId={film.id} activeTab={activeTab} handleClick={handleTabClick}/>
+            <TabsList film={film} comments={comments}/>
 
-              {activeTab === TABS[0] && <FilmOverview film={film}/>}
-              {activeTab === TABS[1] && <FilmDetails film={film}/>}
-              {activeTab === TABS[2] && <FilmReviews comments={comments}/>}
-
-            </div>
           </div>
         </div>
       </section>
