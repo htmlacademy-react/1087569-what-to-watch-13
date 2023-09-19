@@ -35,15 +35,15 @@ function MainCard({film, onMouseEnterHandler, onMouseLeaveHandler, isActive}: Ma
       onMouseEnter={onMouseEnterHandler}
       onMouseLeave={onMouseLeaveHandler}
     >
-      { activePlayer ? <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted/> :
-        <>
-          <div className="small-film-card__image">
-            <img src={previewImage} alt={name} width="280" height="175" />
-          </div>
-          <h3 className="small-film-card__title">
-            <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: id })}>{name}</Link>
-          </h3>
-        </>}
+      <Link to={generatePath(AppRoute.Film, { id: id })}>
+        <div className="small-film-card__image">
+          {activePlayer ? <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted /> :
+            <img src={previewImage} alt={name} width="280" height="175" />}
+        </div>
+      </Link>
+      <h3 className="small-film-card__title">
+        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: id })}>{name}</Link>
+      </h3>
     </article>
   );
 }
