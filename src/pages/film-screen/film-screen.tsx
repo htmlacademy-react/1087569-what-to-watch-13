@@ -1,22 +1,33 @@
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { Helmet } from 'react-helmet-async';
+import Tabs from '../../components/tabs/tabs';
+import FilmOverview from '../../components/film-overview/film-overview';
+import FilmDetails from '../../components/film-details/film-details';
+import FilmReviews from '../../components/film-reviews/film-reviews';
 import CardsList from '../../components/cards-list/cards-list';
+import { Helmet } from 'react-helmet-async';
 import { TFilm, TFilmDetail } from '../../types/film';
 import { useParams } from 'react-router-dom';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../consts';
-import { getRatingLevel } from '../../utils';
+import { useState, MouseEvent } from 'react';
+import { TABS } from '../../consts';
+import { TComment } from '../../types/comment';
 
 type FilmScreenProps = {
   similarFilms: TFilm[];
   detailFilms: TFilmDetail[];
+  comments: TComment[];
 }
 
-function FilmScreen({similarFilms, detailFilms}: FilmScreenProps): JSX.Element {
+function FilmScreen({similarFilms, detailFilms, comments}: FilmScreenProps): JSX.Element {
   const {id} = useParams();
+  const [activeTab, setActiveTab] = useState(TABS[0]);
   const film = detailFilms.find((detailfilm) => detailfilm.id === id) as TFilmDetail;
-  const {name, posterImage, backgroundImage, description, rating, scoresCount, director, starring, genre, released} = film;
+  const {name, posterImage, backgroundImage, genre, released} = film;
+  const handleTabClick = (evt: MouseEvent<HTMLElement>) => {
+    setActiveTab(evt.currentTarget.innerText);
+  };
 
   return (
     <>
@@ -81,37 +92,12 @@ function FilmScreen({similarFilms, detailFilms}: FilmScreenProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+              <Tabs filmId={film.id} activeTab={activeTab} handleClick={handleTabClick}/>
 
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{getRatingLevel(rating)}</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
+              {activeTab === TABS[0] && <FilmOverview film={film}/>}
+              {activeTab === TABS[1] && <FilmDetails film={film}/>}
+              {activeTab === TABS[2] && <FilmReviews comments={comments}/>}
 
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p>Gustave prides himself on providing first-class service to the hotel&apos;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&apos;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.map((star, index) => starring.length === ++index ? star : `${star}, `)} and other</strong></p>
-              </div>
             </div>
           </div>
         </div>

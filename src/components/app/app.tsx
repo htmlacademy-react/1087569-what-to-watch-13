@@ -11,6 +11,7 @@ import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import { TFilm, TFilmDetail } from '../../types/film';
+import { TComment } from '../../types/comment';
 
 type AppScreenProps = {
   films: TFilm[];
@@ -18,9 +19,10 @@ type AppScreenProps = {
   detailFilms: TFilmDetail[];
   similarFilms: TFilm[];
   promoFilm: TPromoFilm;
+  comments: TComment[];
 }
 
-function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm}: AppScreenProps): JSX.Element {
+function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -35,7 +37,7 @@ function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm}: AppSc
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen similarFilms={similarFilms} detailFilms={detailFilms}/>}
+            element={<FilmScreen similarFilms={similarFilms} detailFilms={detailFilms} comments={comments}/>}
           />
           <Route
             path={AppRoute.SignIn}
