@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
+import { Provider } from 'react-redux';
+import { store } from './store';
 import { promoFilm } from './consts';
-import { films, favoriteFilms, detailFilms, similarFilms } from './mocks/films';
+import { favoriteFilms, detailFilms, similarFilms } from './mocks/films';
 import { comments } from './mocks/comments';
 
 const root = ReactDOM.createRoot(
@@ -11,13 +13,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      films={films}
-      favoriteFilms={favoriteFilms}
-      detailFilms={detailFilms}
-      similarFilms={similarFilms}
-      promoFilm={promoFilm}
-      comments={comments}
-    />
+    <Provider store={store}>
+      <App
+        favoriteFilms={favoriteFilms}
+        detailFilms={detailFilms}
+        similarFilms={similarFilms}
+        promoFilm={promoFilm}
+        comments={comments}
+      />
+    </Provider>
   </React.StrictMode>
 );

@@ -27,3 +27,15 @@ export const Tabs = {
   Details: 'details',
   Reviews: 'reviews'
 } as const;
+
+export const NameSpace = {
+  Films: 'FILMS',
+  Film: 'FILM',
+  SimilarFilms: 'SIMILAR_FILMS',
+  FavoriteFilms: 'FAVORITE_FILMS',
+  Comments: 'COMMENTS',
+  User: 'USER',
+  App: 'APP'
+} as const;
+
+export const DEFAULT_GENRE = 'All genres';

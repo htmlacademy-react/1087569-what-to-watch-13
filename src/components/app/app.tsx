@@ -14,7 +14,6 @@ import { TFilm, TFilmDetail } from '../../types/film';
 import { TComment } from '../../types/comment';
 
 type AppScreenProps = {
-  films: TFilm[];
   favoriteFilms: TFilm[];
   detailFilms: TFilmDetail[];
   similarFilms: TFilm[];
@@ -22,7 +21,7 @@ type AppScreenProps = {
   comments: TComment[];
 }
 
-function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
+function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
   return(
     <HelmetProvider>
       <BrowserRouter>
@@ -45,7 +44,7 @@ function App({films, favoriteFilms, detailFilms, similarFilms, promoFilm, commen
           />
           <Route
             path={AppRoute.Main}
-            element={<MainScreen films={films} promoFilm={promoFilm}/>}
+            element={<MainScreen promoFilm={promoFilm}/>}
           />
           <Route
             path={AppRoute.MyList}

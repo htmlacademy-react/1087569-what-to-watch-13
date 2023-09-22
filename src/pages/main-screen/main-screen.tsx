@@ -4,14 +4,20 @@ import GenresList from '../../components/genres-list/genres-list';
 import Footer from '../../components/footer/footer';
 import { Helmet } from 'react-helmet-async';
 import { TPromoFilm } from '../../types/promo-film';
-import { TFilm } from '../../types/film';
+import { useAppSelector } from '../../hooks';
+import { getFilms, getActiveGenre } from '../../store/films-process/films-process.selectors';
+import { getGenres, getFilmsByGenre } from '../../utils';
 
 type MainPageProps = {
-  films: TFilm[];
   promoFilm: TPromoFilm;
 }
 
-function MainScreen({films, promoFilm}: MainPageProps): JSX.Element {
+function MainScreen({promoFilm}: MainPageProps): JSX.Element {
+  const activeGenre = useAppSelector(getActiveGenre);
+  const films = useAppSelector(getFilms);
+  const genres = getGenres(films);
+  const filmsByGenre = getFilmsByGenre(films, activeGenre);
+
   return (
     <>
       <section className="film-card">
@@ -76,9 +82,9 @@ function MainScreen({films, promoFilm}: MainPageProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
+          <GenresList genres={genres} activeGenre={activeGenre} />
 
-          <CardsList films={films} />
+          <CardsList films={filmsByGenre} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

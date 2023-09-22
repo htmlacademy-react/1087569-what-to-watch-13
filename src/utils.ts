@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import { TFilmDetail } from './types/film';
+import { TFilm, TFilmDetail } from './types/film';
 import { TComment } from './types/comment';
+import { DEFAULT_GENRE } from './consts';
 
 export const getRatingLevel = (rating: number) => {
   if(rating >= 0 && rating < 3) {
@@ -49,3 +50,13 @@ export const upperCaseFirst = (str: string) => {
 };
 
 export const formatReviewDate = (reviewDate: TComment['date']) => reviewDate ? dayjs(reviewDate).format(DATE_REVIEW_FORMAT) : '';
+
+export const getGenres = (films: TFilm[]) => {
+  const genres = [DEFAULT_GENRE];
+  const unicGenres = Array.from(new Set(films.map((film) => film.genre)));
+  return genres.concat(unicGenres).sort();
+};
+
+export const getFilmsByGenre = (films: TFilm[], activeGenre: string) => (
+  activeGenre === DEFAULT_GENRE ? films : films.filter((film) => film.genre === activeGenre)
+);
