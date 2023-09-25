@@ -3,10 +3,12 @@ import Logo from '../../components/logo/logo';
 import GenresList from '../../components/genres-list/genres-list';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Footer from '../../components/footer/footer';
+import ErrorScreen from '../error-screen/error-screen';
+import { Loader } from '../../components/loader/loader';
 import { Helmet } from 'react-helmet-async';
 import { TPromoFilm } from '../../types/promo-film';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getFilms, getActiveGenre, getFilmsCount } from '../../store/films-process/films-process.selectors';
+import { getFilms, getActiveGenre, getFilmsCount, getFilmsLoadedStatus, getErrorStatus } from '../../store/films-process/films-process.selectors';
 import { getGenres, getFilmsByGenre } from '../../utils';
 import { resetFilmsCount } from '../../store/films-process/films-process.slice';
 import { useEffect } from 'react';
@@ -17,6 +19,8 @@ type MainPageProps = {
 
 function MainScreen({promoFilm}: MainPageProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const isFilmsLoadedStatus = useAppSelector(getFilmsLoadedStatus);
+  const hasError = useAppSelector(getErrorStatus);
   const activeGenre = useAppSelector(getActiveGenre);
   const films = useAppSelector(getFilms);
   const filmsCount = useAppSelector(getFilmsCount);
@@ -26,6 +30,14 @@ function MainScreen({promoFilm}: MainPageProps): JSX.Element {
   useEffect(() => {
     dispatch(resetFilmsCount());
   }, [dispatch]);
+
+  if (!isFilmsLoadedStatus) {
+    return <Loader />;
+  }
+
+  if(hasError) {
+    return <ErrorScreen />;
+  }
 
   return (
     <>

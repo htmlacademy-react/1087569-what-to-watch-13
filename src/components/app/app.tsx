@@ -12,6 +12,9 @@ import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import { TFilm, TFilmDetail } from '../../types/film';
 import { TComment } from '../../types/comment';
+import { fetchFilmsAction } from '../../store/api-actions';
+import { useAppDispatch } from '../../hooks';
+import {useEffect} from 'react';
 
 type AppScreenProps = {
   favoriteFilms: TFilm[];
@@ -22,6 +25,12 @@ type AppScreenProps = {
 }
 
 function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFilmsAction());
+  }, [dispatch]);
+
   return(
     <HelmetProvider>
       <BrowserRouter>

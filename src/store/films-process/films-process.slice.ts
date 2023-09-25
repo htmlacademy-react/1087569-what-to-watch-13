@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, DEFAULT_GENRE, DEFAULT_FILMS_COUNT } from '../../consts';
 import { TFilmsProcess } from '../../types/state';
-import { films } from '../../mocks/films';
+import { fetchFilmsAction } from '../api-actions';
 
 const initialState: TFilmsProcess = {
-  films: films,
+  films: [],
   filmsCount: DEFAULT_FILMS_COUNT,
-  activeGenre: DEFAULT_GENRE
+  activeGenre: DEFAULT_GENRE,
+  isFilmsDataLoaded: false,
+  hasError: false
 };
 
 export const filmsProcess = createSlice({
@@ -23,7 +25,20 @@ export const filmsProcess = createSlice({
       state.filmsCount = DEFAULT_FILMS_COUNT;
     }
   },
-  extraReducers: {}
+  extraReducers(builder) {
+    builder
+      .addCase(fetchFilmsAction.pending, (state) => {
+        state.isFilmsDataLoaded = false;
+      })
+      .addCase(fetchFilmsAction.fulfilled, (state, action) => {
+        state.films = action.payload;
+        state.isFilmsDataLoaded = true;
+      })
+      .addCase(fetchFilmsAction.rejected, (state) => {
+        state.isFilmsDataLoaded = false;
+        state.hasError = true;
+      });
+  }
 });
 
 export const {setActiveGenre, changeFilmsCount, resetFilmsCount} = filmsProcess.actions;

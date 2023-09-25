@@ -5,6 +5,8 @@ export type TFilmsProcess = {
   films: TFilm[];
   filmsCount: number;
   activeGenre: string;
+  isFilmsDataLoaded: boolean;
+  hasError: boolean;
 }
 
 export type TState = ReturnType<typeof store.getState>;

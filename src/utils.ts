@@ -53,8 +53,8 @@ export const formatReviewDate = (reviewDate: TComment['date']) => reviewDate ? d
 
 export const getGenres = (films: TFilm[]) => {
   const genres = [DEFAULT_GENRE];
-  const unicGenres = Array.from(new Set(films.map((film) => film.genre)));
-  return genres.concat(unicGenres).sort();
+  const unicGenres = Array.from(new Set(films.map((film) => film.genre))).sort();
+  return genres.concat(unicGenres);
 };
 
 export const getFilmsByGenre = (films: TFilm[], activeGenre: string) => (
