@@ -3,6 +3,7 @@ import { store } from '../store';
 
 export type TFilmsProcess = {
   films: TFilm[];
+  filmsCount: number;
   activeGenre: string;
 }
 

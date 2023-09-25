@@ -1,22 +1,31 @@
 import CardsList from '../../components/cards-list/cards-list';
 import Logo from '../../components/logo/logo';
 import GenresList from '../../components/genres-list/genres-list';
+import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import Footer from '../../components/footer/footer';
 import { Helmet } from 'react-helmet-async';
 import { TPromoFilm } from '../../types/promo-film';
-import { useAppSelector } from '../../hooks';
-import { getFilms, getActiveGenre } from '../../store/films-process/films-process.selectors';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getFilms, getActiveGenre, getFilmsCount } from '../../store/films-process/films-process.selectors';
 import { getGenres, getFilmsByGenre } from '../../utils';
+import { resetFilmsCount } from '../../store/films-process/films-process.slice';
+import { useEffect } from 'react';
 
 type MainPageProps = {
   promoFilm: TPromoFilm;
 }
 
 function MainScreen({promoFilm}: MainPageProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const activeGenre = useAppSelector(getActiveGenre);
   const films = useAppSelector(getFilms);
+  const filmsCount = useAppSelector(getFilmsCount);
   const genres = getGenres(films);
   const filmsByGenre = getFilmsByGenre(films, activeGenre);
+
+  useEffect(() => {
+    dispatch(resetFilmsCount());
+  }, [dispatch]);
 
   return (
     <>
@@ -86,9 +95,7 @@ function MainScreen({promoFilm}: MainPageProps): JSX.Element {
 
           <CardsList films={filmsByGenre} />
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          {filmsCount < filmsByGenre.length && <ShowMoreButton />}
         </section>
 
         <Footer />

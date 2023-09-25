@@ -57,6 +57,13 @@ export const films: TFilm[] = [
     previewImage: 'https://www.film.ru/sites/default/files/styles/thumb_260x400/public/movies/posters/50410659-2360786.jpeg',
     previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
     genre: 'Thriller'
+  },
+  {
+    id: '9',
+    name: 'Crash',
+    previewImage: 'https://www.film.ru/sites/default/files/styles/thumb_260x400/public/movies/posters/50410659-2360786.jpeg',
+    previewVideoLink: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
+    genre: 'Thriller'
   }
 ];
 

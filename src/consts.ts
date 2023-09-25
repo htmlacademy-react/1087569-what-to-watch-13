@@ -39,3 +39,4 @@ export const NameSpace = {
 } as const;
 
 export const DEFAULT_GENRE = 'All genres';
+export const DEFAULT_FILMS_COUNT = 8;
