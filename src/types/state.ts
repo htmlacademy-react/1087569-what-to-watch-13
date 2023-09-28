@@ -1,5 +1,10 @@
 import { TFilm } from './film';
 import { store } from '../store';
+import { AuthorizationStatus } from '../consts';
+
+export type TUserProcess = {
+  authorizationStatus: AuthorizationStatus;
+}
 
 export type TFilmsProcess = {
   films: TFilm[];

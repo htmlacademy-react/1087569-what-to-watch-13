@@ -4,15 +4,15 @@ export const promoFilm = {
   dateRelease: 2014
 };
 
-export const AppRoute = {
-  Main: '/',
-  SignIn: '/login',
-  MyList: '/mylist',
-  Film: '/films/:id',
-  AddReview: '/films/:id/review',
-  Player: '/player/:id',
-  NotFound: '*'
-} as const;
+export enum AppRoute {
+  Main = '/',
+  SignIn = '/login',
+  MyList = '/mylist',
+  Film = '/films/:id',
+  AddReview = '/films/:id/review',
+  Player = '/player/:id',
+  NotFound = '*'
+}
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',
@@ -52,3 +52,5 @@ export const APIRoute = {
   Login: '/login',
   Logout: '/logout'
 } as const;
+
+export const AUTH_TOKEN_KEY_NAME = 'what-to-watch-token';
