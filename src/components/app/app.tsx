@@ -9,14 +9,15 @@ import { TPromoFilm } from '../../types/promo-film';
 import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute, AuthorizationStatus } from '../../consts';
+import { AppRoute } from '../../consts';
 import { TFilm, TFilmDetail } from '../../types/film';
 import { TComment } from '../../types/comment';
-import { fetchFilmsAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
+import { fetchFilmsAction, checkAuthAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {useEffect} from 'react';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
 type AppScreenProps = {
   favoriteFilms: TFilm[];
@@ -27,9 +28,11 @@ type AppScreenProps = {
 }
 
 function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(checkAuthAction());
     dispatch(fetchFilmsAction());
   }, [dispatch]);
 
@@ -40,7 +43,7 @@ function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: Ap
           <Route
             path={AppRoute.AddReview}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <AddReviewScreen films={detailFilms} />
               </PrivateRoute>
             }
@@ -60,7 +63,7 @@ function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: Ap
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
                 <MyListScreen favoriteFilms={favoriteFilms} />
               </PrivateRoute>
             }
