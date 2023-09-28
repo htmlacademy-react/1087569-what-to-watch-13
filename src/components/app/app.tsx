@@ -6,7 +6,7 @@ import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { TPromoFilm } from '../../types/promo-film';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../consts';
@@ -15,6 +15,8 @@ import { TComment } from '../../types/comment';
 import { fetchFilmsAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
 import {useEffect} from 'react';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 type AppScreenProps = {
   favoriteFilms: TFilm[];
@@ -33,7 +35,7 @@ function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: Ap
 
   return(
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route
             path={AppRoute.AddReview}
@@ -72,7 +74,7 @@ function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: Ap
             element={<NotFoundScreen />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
