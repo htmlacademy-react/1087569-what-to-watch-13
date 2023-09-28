@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { promoFilm } from './consts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { favoriteFilms, detailFilms, similarFilms } from './mocks/films';
@@ -21,7 +20,6 @@ root.render(
         favoriteFilms={favoriteFilms}
         detailFilms={detailFilms}
         similarFilms={similarFilms}
-        promoFilm={promoFilm}
         comments={comments}
       />
     </Provider>

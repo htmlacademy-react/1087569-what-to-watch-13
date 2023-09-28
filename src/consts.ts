@@ -1,9 +1,3 @@
-export const promoFilm = {
-  name: 'The Grand Budapest Hotel',
-  genre: 'Drama',
-  dateRelease: 2014
-};
-
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -31,6 +25,7 @@ export const Tabs = {
 export const NameSpace = {
   Films: 'FILMS',
   Film: 'FILM',
+  PromoFilm: 'PROMO_FILM',
   SimilarFilms: 'SIMILAR_FILMS',
   FavoriteFilms: 'FAVORITE_FILMS',
   Comments: 'COMMENTS',

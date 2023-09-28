@@ -5,7 +5,6 @@ import MainScreen from '../../pages/main-screen/main-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
 import PlayerScreen from '../../pages/player-screen/player-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { TPromoFilm } from '../../types/promo-film';
 import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
@@ -23,11 +22,10 @@ type AppScreenProps = {
   favoriteFilms: TFilm[];
   detailFilms: TFilmDetail[];
   similarFilms: TFilm[];
-  promoFilm: TPromoFilm;
   comments: TComment[];
 }
 
-function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: AppScreenProps): JSX.Element {
+function App({favoriteFilms, detailFilms, similarFilms, comments}: AppScreenProps): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
@@ -58,7 +56,7 @@ function App({favoriteFilms, detailFilms, similarFilms, promoFilm, comments}: Ap
           />
           <Route
             path={AppRoute.Main}
-            element={<MainScreen promoFilm={promoFilm}/>}
+            element={<MainScreen />}
           />
           <Route
             path={AppRoute.MyList}

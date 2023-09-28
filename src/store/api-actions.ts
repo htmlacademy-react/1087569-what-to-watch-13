@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {AxiosInstance} from 'axios';
 import { TFilm } from '../types/film';
+import { TPromoFilm } from '../types/promo-film';
 import { TAppDispatch, TState } from '../types/state';
 import { TAuthData } from '../types/auth-data';
 import { TUserData } from '../types/user-data';
@@ -16,6 +17,19 @@ export const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, {
   `${NameSpace.Films}/fetch`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<TFilm[]>(APIRoute.Films);
+
+    return data;
+  }
+);
+
+export const fetchPromoFilmAction = createAsyncThunk<TPromoFilm, undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.PromoFilm}/fetch`,
+  async(_arg, {extra: api}) => {
+    const {data} = await api.get<TPromoFilm>(APIRoute.Promo);
 
     return data;
   }

@@ -1,4 +1,5 @@
 import { TFilm } from './film';
+import { TPromoFilm } from './promo-film';
 import { store } from '../store';
 import { AuthorizationStatus } from '../consts';
 
@@ -12,6 +13,10 @@ export type TFilmsProcess = {
   activeGenre: string;
   isFilmsDataLoaded: boolean;
   hasError: boolean;
+}
+
+export type TPromoFilmProcess = {
+  promoFilm: TPromoFilm | null;
 }
 
 export type TState = ReturnType<typeof store.getState>;
