@@ -5,3 +5,8 @@ export type TComment = {
   comment: string;
   rating: number;
 }
+
+export type TCommentData = {
+  comment: string;
+  rating: number;
+}

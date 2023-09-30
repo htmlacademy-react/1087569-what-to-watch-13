@@ -1,93 +1,43 @@
 import Footer from '../../components/footer/footer';
-import Logo from '../../components/logo/logo';
 import CardsList from '../../components/cards-list/cards-list';
-import TabsList from '../../components/tabs-list/tabs-list';
+import { Loader } from '../../components/loader/loader';
+import FilmCardFull from '../../components/film-card-full/film-card-full';
 import { Helmet } from 'react-helmet-async';
-import { TFilm, TFilmDetail } from '../../types/film';
 import { useParams } from 'react-router-dom';
-import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../consts';
-import { TComment } from '../../types/comment';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFilm, getFilmLoadedStatus } from '../../store/film-process/film-process.selectors';
+import { fetchFilmAction } from '../../store/api-actions';
+import { dropFilm } from '../../store/film-process/film-process.slice';
+import { fetchSimilarFilmsAction } from '../../store/api-actions';
+import { getSimilarFilms } from '../../store/similar-films-process/similar-films-process.selectors';
+import { clearSimilarFilms } from '../../store/similar-films-process/similar-films-process.slice';
+import { useEffect } from 'react';
 
-type FilmScreenProps = {
-  similarFilms: TFilm[];
-  detailFilms: TFilmDetail[];
-  comments: TComment[];
-}
+function FilmScreen(): JSX.Element {
+  const {id = ''} = useParams();
+  const dispatch = useAppDispatch();
+  const film = useAppSelector(getFilm);
+  const similarFilms = useAppSelector(getSimilarFilms);
+  const isFilmLoaded = useAppSelector(getFilmLoadedStatus);
 
-function FilmScreen({similarFilms, detailFilms, comments}: FilmScreenProps): JSX.Element {
-  const {id} = useParams();
-  const film = detailFilms.find((detailfilm) => detailfilm.id === id) as TFilmDetail;
-  const {name, posterImage, backgroundImage, genre, released} = film;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilmAction(id));
+      dispatch(fetchSimilarFilmsAction(id));
+    }
 
-  return (
+    return () => {
+      dispatch(dropFilm());
+      dispatch(clearSimilarFilms());
+    };
+  },[id, dispatch]);
+
+  return !isFilmLoaded ? <Loader /> : (
     <>
-      <section className="film-card film-card--full">
-        <Helmet>
-          <title>Страница фильма</title>
-        </Helmet>
-        <div className="film-card__hero">
-          <div className="film-card__bg">
-            <img src={backgroundImage} alt={name} />
-          </div>
-
-          <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header film-card__head">
-            <Logo />
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
-          </header>
-
-          <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                <Link to={generatePath(AppRoute.AddReview, {id: film.id})} className="btn film-card__button">Add review</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="film-card__wrap film-card__translate-top">
-          <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
-            </div>
-
-            <TabsList film={film} comments={comments}/>
-
-          </div>
-        </div>
-      </section>
-
+      <Helmet>
+        <title>Страница фильма</title>
+      </Helmet>
+      {film ? <FilmCardFull film={film}/> : ''}
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>

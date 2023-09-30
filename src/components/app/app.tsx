@@ -9,8 +9,6 @@ import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../consts';
-import { TFilm, TFilmDetail } from '../../types/film';
-import { TComment } from '../../types/comment';
 import { fetchFilmsAction, checkAuthAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {useEffect} from 'react';
@@ -18,14 +16,7 @@ import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/user-process/user-process.selectors';
 
-type AppScreenProps = {
-  favoriteFilms: TFilm[];
-  detailFilms: TFilmDetail[];
-  similarFilms: TFilm[];
-  comments: TComment[];
-}
-
-function App({favoriteFilms, detailFilms, similarFilms, comments}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
 
@@ -42,13 +33,13 @@ function App({favoriteFilms, detailFilms, similarFilms, comments}: AppScreenProp
             path={AppRoute.AddReview}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <AddReviewScreen films={detailFilms} />
+                <AddReviewScreen  />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Film}
-            element={<FilmScreen similarFilms={similarFilms} detailFilms={detailFilms} comments={comments}/>}
+            element={<FilmScreen />}
           />
           <Route
             path={AppRoute.SignIn}
@@ -62,13 +53,13 @@ function App({favoriteFilms, detailFilms, similarFilms, comments}: AppScreenProp
             path={AppRoute.MyList}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <MyListScreen favoriteFilms={favoriteFilms} />
+                <MyListScreen />
               </PrivateRoute>
             }
           />
           <Route
             path={AppRoute.Player}
-            element={<PlayerScreen films={detailFilms} />}
+            element={<PlayerScreen />}
           />
           <Route
             path={AppRoute.NotFound}

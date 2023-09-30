@@ -49,3 +49,10 @@ export const APIRoute = {
 } as const;
 
 export const AUTH_TOKEN_KEY_NAME = 'what-to-watch-token';
+
+export enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}
