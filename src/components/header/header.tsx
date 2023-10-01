@@ -1,5 +1,6 @@
 import Logo from '../logo/logo';
-import { Link } from 'react-router-dom';
+import { Link, generatePath } from 'react-router-dom';
+import { TFilmDetail } from '../../types/film';
 import cn from 'classnames';
 import { AppRoute } from '../../consts';
 import { logoutAction } from '../../store/api-actions';
@@ -8,9 +9,15 @@ import { MouseEvent } from 'react';
 
 type HeaderProps = {
   isAuthorized: boolean;
+  isPromo?: boolean;
+  isFilmPage?: boolean;
+  isCommentPage?: boolean;
+  isMyList?: boolean;
+  filmId?: TFilmDetail['id'];
+  filmName?: TFilmDetail['name'];
 }
 
-function Header({ isAuthorized }: HeaderProps): JSX.Element {
+function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, filmId, filmName }: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
   const handleLogoutClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
@@ -20,10 +27,24 @@ function Header({ isAuthorized }: HeaderProps): JSX.Element {
   return (
     <header className={cn(
       'page-header',
-      { 'film-card__head': isAuthorized }
+      { 'film-card__head': isAuthorized && isPromo || isFilmPage },
+      {'user-page__head': isMyList}
     )}
     >
       <Logo />
+      {
+        isCommentPage && filmId &&
+        <nav className="breadcrumbs">
+          <ul className="breadcrumbs__list">
+            <li className="breadcrumbs__item">
+              <Link to={generatePath(AppRoute.Film, { id: filmId })} className="breadcrumbs__link">{filmName}</Link>
+            </li>
+            <li className="breadcrumbs__item">
+              <a className="breadcrumbs__link">Add review</a>
+            </li>
+          </ul>
+        </nav>
+      }
       {
         isAuthorized ?
           <ul className="user-block">

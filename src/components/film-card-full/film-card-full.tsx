@@ -33,7 +33,7 @@ function FilmCardFull({film}: FilmCardFullProps): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header isAuthorized={isAuthorized}/>
+        <Header isAuthorized={isAuthorized} isFilmPage />
 
         <div className="film-card__wrap">
           <div className="film-card__desc">

@@ -30,7 +30,7 @@ function PromoFilmCard(): JSX.Element {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <Header isAuthorized={isAuthorized} />
+      <Header isAuthorized={isAuthorized} isPromo />
       { promoFilm && isAuthorized &&
       <div className="film-card__wrap">
         <div className="film-card__info">
