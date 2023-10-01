@@ -14,6 +14,7 @@ type FormCommentProps = {
 function FormComment({filmId}: FormCommentProps): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const sendingStatus = useAppSelector(getSendingCommentStatus);
@@ -43,6 +44,10 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
       setRating('');
       dispatch(dropSendingStatus());
       navigate(`${APIRoute.Films}/${filmId}?tab=${Tabs.Reviews}`);
+    }
+
+    if (sendingStatus === RequestStatus.Error) {
+      setErrorMessage('Posting a comment is currently not possible. Please try again.');
     }
   }, [sendingStatus, dispatch, navigate, filmId]);
 
@@ -75,7 +80,7 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
             ))}
           </div>
         </div>
-
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
         <div className="add-review__text">
           <textarea
             onChange={handleCommentChange}
