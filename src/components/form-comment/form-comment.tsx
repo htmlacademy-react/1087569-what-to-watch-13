@@ -1,52 +1,95 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, Fragment, useEffect } from 'react';
+import { RATING_VALUES_COUNT, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../consts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getSendingCommentStatus } from '../../store/comments-process/comments.process.selectors';
+import { postCommentAction } from '../../store/api-actions';
+import { TFilmDetail } from '../../types/film';
+import { dropSendingStatus } from '../../store/comments-process/comments-process.slice';
 
-function FormComment(): JSX.Element {
+type FormCommentProps = {
+  filmId: TFilmDetail['id'];
+}
+
+function FormComment({filmId}: FormCommentProps): JSX.Element {
   const [comment, setComment] = useState('');
-  const commentChangeHandle = (evt: ChangeEvent<HTMLTextAreaElement>) => {
+  const [rating, setRating] = useState('');
+  const dispatch = useAppDispatch();
+  const sendingStatus = useAppSelector(getSendingCommentStatus);
+  const preparedRatingValues = Array.from({length: RATING_VALUES_COUNT}, (_v, k) => k + 1).reverse();
+
+  const isValid =
+    comment.length >= MIN_COMMENT_LENGTH &&
+    comment.length <= MAX_COMMENT_LENGTH &&
+    rating !== '';
+
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    setRating(evt.target.value);
+  };
+
+  const handleCommentChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(evt.target.value);
   };
 
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(postCommentAction({ commentData: { comment, rating: +rating }, filmId }));
+  };
+
+  useEffect(() => {
+    if (sendingStatus === RequestStatus.Success) {
+      setComment('');
+      setRating('');
+      dispatch(dropSendingStatus());
+    }
+  }, [sendingStatus, dispatch]);
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form
+        action="#"
+        className="add-review__form"
+        onSubmit={handleFormSubmit}
+      >
         <div className="rating">
           <div className="rating__stars">
-            <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
-            <label className="rating__label" htmlFor="star-10">Rating 10</label>
-
-            <input className="rating__input" id="star-9" type="radio" name="rating" value="9" />
-            <label className="rating__label" htmlFor="star-9">Rating 9</label>
-
-            <input className="rating__input" id="star-8" type="radio" name="rating" value="8" defaultChecked />
-            <label className="rating__label" htmlFor="star-8">Rating 8</label>
-
-            <input className="rating__input" id="star-7" type="radio" name="rating" value="7" />
-            <label className="rating__label" htmlFor="star-7">Rating 7</label>
-
-            <input className="rating__input" id="star-6" type="radio" name="rating" value="6" />
-            <label className="rating__label" htmlFor="star-6">Rating 6</label>
-
-            <input className="rating__input" id="star-5" type="radio" name="rating" value="5" />
-            <label className="rating__label" htmlFor="star-5">Rating 5</label>
-
-            <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
-            <label className="rating__label" htmlFor="star-4">Rating 4</label>
-
-            <input className="rating__input" id="star-3" type="radio" name="rating" value="3" />
-            <label className="rating__label" htmlFor="star-3">Rating 3</label>
-
-            <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
-            <label className="rating__label" htmlFor="star-2">Rating 2</label>
-
-            <input className="rating__input" id="star-1" type="radio" name="rating" value="1" />
-            <label className="rating__label" htmlFor="star-1">Rating 1</label>
+            {preparedRatingValues.map((item) => (
+              <Fragment key={item}>
+                <input
+                  className="rating__input"
+                  id={`star-${item}`}
+                  type="radio"
+                  name="rating"
+                  value={item}
+                  onChange={handleRatingChange}
+                  checked={+rating === item}
+                />
+                <label
+                  className="rating__label"
+                  htmlFor={`star-${item}`}
+                >{`Rating ${item}`}
+                </label>
+              </Fragment>
+            ))}
           </div>
         </div>
 
         <div className="add-review__text">
-          <textarea onChange={commentChangeHandle} value={comment} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea
+            onChange={handleCommentChange}
+            value={comment}
+            className="add-review__textarea"
+            name="review-text"
+            id="review-text"
+            placeholder="Review text"
+          >
+          </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button
+              className="add-review__btn"
+              type="submit"
+              disabled={!isValid || sendingStatus === RequestStatus.Success}
+            >Post
+            </button>
           </div>
 
         </div>

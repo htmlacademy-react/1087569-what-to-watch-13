@@ -47,7 +47,7 @@ function AddReviewScreen(): JSX.Element {
             </div>
           </div>
 
-          <FormComment />
+          <FormComment filmId={film.id} />
 
         </section> : ''}
     </>
