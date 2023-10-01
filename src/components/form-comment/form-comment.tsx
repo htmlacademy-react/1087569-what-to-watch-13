@@ -1,10 +1,11 @@
 import { ChangeEvent, FormEvent, useState, Fragment, useEffect } from 'react';
-import { RATING_VALUES_COUNT, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus } from '../../consts';
+import { RATING_VALUES_COUNT, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus, APIRoute, Tabs } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSendingCommentStatus } from '../../store/comments-process/comments.process.selectors';
 import { postCommentAction } from '../../store/api-actions';
 import { TFilmDetail } from '../../types/film';
 import { dropSendingStatus } from '../../store/comments-process/comments-process.slice';
+import { useNavigate } from 'react-router-dom';
 
 type FormCommentProps = {
   filmId: TFilmDetail['id'];
@@ -14,6 +15,7 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const sendingStatus = useAppSelector(getSendingCommentStatus);
   const preparedRatingValues = Array.from({length: RATING_VALUES_COUNT}, (_v, k) => k + 1).reverse();
 
@@ -40,8 +42,9 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
       setComment('');
       setRating('');
       dispatch(dropSendingStatus());
+      navigate(`${APIRoute.Films}/${filmId}?tab=${Tabs.Reviews}`);
     }
-  }, [sendingStatus, dispatch]);
+  }, [sendingStatus, dispatch, navigate, filmId]);
 
   return (
     <div className="add-review">
