@@ -33,7 +33,7 @@ function App(): JSX.Element {
             path={AppRoute.AddReview}
             element={
               <PrivateRoute authorizationStatus={authorizationStatus}>
-                <AddReviewScreen  />
+                <AddReviewScreen />
               </PrivateRoute>
             }
           />
