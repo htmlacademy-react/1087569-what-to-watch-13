@@ -1,7 +1,7 @@
 import { TFilm } from '../../types/film';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute, TIMER_VIDEO } from '../../consts';
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState, memo } from 'react';
 import VideoPlayer from '../video-player/video-player';
 
 type MainCardProps = {
@@ -48,4 +48,4 @@ function MainCard({film, onMouseEnterHandler, onMouseLeaveHandler, isActive}: Ma
   );
 }
 
-export default MainCard;
+export default memo(MainCard);
