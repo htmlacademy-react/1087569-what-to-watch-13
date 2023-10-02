@@ -4,7 +4,8 @@ import { TFilmDetail } from '../../types/film';
 import cn from 'classnames';
 import { AppRoute } from '../../consts';
 import { logoutAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getUserAvatar } from '../../store/user-process/user-process.selectors';
 import { MouseEvent } from 'react';
 
 type HeaderProps = {
@@ -19,6 +20,8 @@ type HeaderProps = {
 
 function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, filmId, filmName }: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const userAvatarUrl = useAppSelector(getUserAvatar);
+
   const handleLogoutClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
@@ -50,7 +53,7 @@ function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, fi
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <img src={userAvatarUrl} alt="User avatar" width="63" height="63" />
               </div>
             </li>
             <li className="user-block__item">

@@ -88,27 +88,31 @@ export const postCommentAction = createAsyncThunk<TComment, {commentData: TComme
   }
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<TUserData['avatarUrl'], undefined, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }>(
   `${NameSpace.User}/checkAuth`,
   async (_arg, {extra: api}) => {
-    await api.get(APIRoute.Login);
+    const {data: {avatarUrl}} = await api.get<TUserData>(APIRoute.Login);
+
+    return avatarUrl;
   }
 );
 
-export const loginAction = createAsyncThunk<void, TAuthData, {
+export const loginAction = createAsyncThunk<TUserData['avatarUrl'], TAuthData, {
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
 }>(
   `${NameSpace.User}/login`,
   async ({email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<TUserData>(APIRoute.Login, {email, password});
+    const {data: {token, avatarUrl}} = await api.post<TUserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Main));
+
+    return avatarUrl;
   }
 );
 
