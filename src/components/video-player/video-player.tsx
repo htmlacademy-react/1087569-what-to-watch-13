@@ -6,10 +6,11 @@ type VideoPlayerProps = {
   isMuted?: boolean;
   isPlaying?: boolean;
   onPlayToogle?: () => void;
-  onTimeUpdate?: (progress: number) => void;
+  onTimeUpdate?: (progress: number, currTime: number) => void;
+  onLoadedMeta?: (duration: number) => void;
 }
 
-function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdate}: VideoPlayerProps): JSX.Element {
+function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdate, onLoadedMeta}: VideoPlayerProps): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleTimeUpdate = () => {
@@ -17,15 +18,21 @@ function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdat
       const duration = videoRef.current.duration;
       const currentTime = videoRef.current.currentTime;
       const progress = (currentTime / duration) * 100;
-      onTimeUpdate(progress);
+      onTimeUpdate(progress, currentTime);
     }
   };
 
   const handleEnded = () => {
     if (videoRef.current && onPlayToogle && onTimeUpdate) {
       videoRef.current.pause();
-      onTimeUpdate(0);
+      onTimeUpdate(0, 0);
       onPlayToogle();
+    }
+  };
+
+  const handleMetaData = () => {
+    if (videoRef.current && onLoadedMeta) {
+      onLoadedMeta(videoRef.current.duration);
     }
   };
 
@@ -52,6 +59,7 @@ function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdat
       ref={videoRef}
       onEnded={handleEnded}
       onTimeUpdate={handleTimeUpdate}
+      onLoadedMetadata={handleMetaData}
       src={src}
       poster={poster}
       muted={isMuted}

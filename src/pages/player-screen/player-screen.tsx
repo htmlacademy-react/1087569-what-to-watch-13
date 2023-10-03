@@ -17,6 +17,8 @@ function PlayerScreen(): JSX.Element {
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const film = useAppSelector(getFilm);
   const isFilmLoaded = useAppSelector(getFilmLoadedStatus);
 
@@ -30,8 +32,13 @@ function PlayerScreen(): JSX.Element {
     setIsPlaying((prev) => !prev);
   };
 
-  const handleTimeUpdate = (currentProgress: number) => {
+  const handleTimeUpdate = (currentProgress: number, currTime: number) => {
     setProgress(currentProgress);
+    setCurrentTime(currTime);
+  };
+
+  const handleLoadedMetaData = (currDuration: number) => {
+    setDuration(currDuration);
   };
 
   useEffect(() => {
@@ -49,11 +56,27 @@ function PlayerScreen(): JSX.Element {
       <Helmet>
         <title>Просмотр</title>
       </Helmet>
-      {film ? <VideoPlayer src={film.videoLink} poster={film.posterImage} isPlaying={isPlaying} onPlayToogle={handlePlayButtonClick} onTimeUpdate={handleTimeUpdate} /> : ''}
+      {
+        film ?
+          <VideoPlayer
+            src={film.videoLink}
+            poster={film.posterImage}
+            isPlaying={isPlaying}
+            onPlayToogle={handlePlayButtonClick}
+            onTimeUpdate={handleTimeUpdate}
+            onLoadedMeta={handleLoadedMetaData}
+          /> : ''
+      }
 
       <ExitPlayerButton onClick={handleExitButtonClick}/>
 
-      <PlayerControlsList onPlayButtonClick={handlePlayButtonClick} isPlaying={isPlaying} progress={progress} />
+      <PlayerControlsList
+        onPlayButtonClick={handlePlayButtonClick}
+        isPlaying={isPlaying}
+        progress={progress}
+        duration={duration}
+        currentTime={currentTime}
+      />
     </div>
   );
 }

@@ -1,10 +1,16 @@
+import { formatTimeLeft } from '../../utils';
+
 type PlayerControlsListProps = {
   onPlayButtonClick:() => void;
   isPlaying: boolean;
   progress: number;
+  duration: number;
+  currentTime: number;
 }
 
-function PlayerControlsList({onPlayButtonClick, isPlaying, progress}: PlayerControlsListProps): JSX.Element {
+function PlayerControlsList({onPlayButtonClick, isPlaying, progress, duration, currentTime}: PlayerControlsListProps): JSX.Element {
+  const timeLeft = duration - currentTime;
+
   return(
     <div className="player__controls">
       <div className="player__controls-row">
@@ -12,7 +18,7 @@ function PlayerControlsList({onPlayButtonClick, isPlaying, progress}: PlayerCont
           <progress className="player__progress" value={progress} max="100"></progress>
           <div className="player__toggler" style={{ left: `${progress}%` }}>Toggler</div>
         </div>
-        <div className="player__time-value">1:30:29</div>
+        <div className="player__time-value">{formatTimeLeft(timeLeft)}</div>
       </div>
 
       <div className="player__controls-row">

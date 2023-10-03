@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { TFilm, TFilmDetail } from './types/film';
 import { TComment } from './types/comment';
-import { DEFAULT_GENRE } from './consts';
+import { DEFAULT_GENRE, TIME_LEFT_FORMAT_HOURS, TIME_LEFT_FORMAT_MINUTES } from './consts';
+
+dayjs.extend(duration);
 
 export const getRatingLevel = (rating: number) => {
   if(rating >= 0 && rating < 3) {
@@ -50,6 +53,14 @@ export const upperCaseFirst = (str: string) => {
 };
 
 export const formatReviewDate = (reviewDate: TComment['date']) => reviewDate ? dayjs(reviewDate).format(DATE_REVIEW_FORMAT) : '';
+export const formatTimeLeft = (timeLeft: number) => {
+  if(!timeLeft) {
+    return '';
+  }
+  const timeDuration = dayjs.duration(timeLeft, 'seconds');
+
+  return timeLeft < 3600 ? timeDuration.format(TIME_LEFT_FORMAT_MINUTES) : timeDuration.format(TIME_LEFT_FORMAT_HOURS);
+};
 
 export const getGenres = (films: TFilm[]) => {
   const genres = [DEFAULT_GENRE];
