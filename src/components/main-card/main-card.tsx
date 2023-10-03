@@ -37,7 +37,7 @@ function MainCard({film, onMouseEnterHandler, onMouseLeaveHandler, isActive}: Ma
     >
       <Link to={generatePath(AppRoute.Film, { id: id })}>
         <div className="small-film-card__image">
-          {activePlayer ? <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted /> :
+          {activePlayer ? <VideoPlayer src={previewVideoLink} poster={previewImage} isMuted isPlaying /> :
             <img src={previewImage} alt={name} width="280" height="175" />}
         </div>
       </Link>

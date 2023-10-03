@@ -8,13 +8,15 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchFilmAction } from '../../store/api-actions';
 import { dropFilm } from '../../store/film-process/film-process.slice';
 import { getFilm, getFilmLoadedStatus } from '../../store/film-process/film-process.selectors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AppRoute } from '../../consts';
 
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
   const film = useAppSelector(getFilm);
   const isFilmLoaded = useAppSelector(getFilmLoadedStatus);
 
@@ -22,6 +24,14 @@ function PlayerScreen(): JSX.Element {
     if (id) {
       navigate(generatePath(AppRoute.Film, {id: id}));
     }
+  };
+
+  const handlePlayButtonClick = () => {
+    setIsPlaying((prev) => !prev);
+  };
+
+  const handleTimeUpdate = (currentProgress: number) => {
+    setProgress(currentProgress);
   };
 
   useEffect(() => {
@@ -39,11 +49,11 @@ function PlayerScreen(): JSX.Element {
       <Helmet>
         <title>Просмотр</title>
       </Helmet>
-      {film ? <VideoPlayer src={film.videoLink} poster={film.posterImage} /> : ''}
+      {film ? <VideoPlayer src={film.videoLink} poster={film.posterImage} isPlaying={isPlaying} onPlayToogle={handlePlayButtonClick} onTimeUpdate={handleTimeUpdate} /> : ''}
 
       <ExitPlayerButton onClick={handleExitButtonClick}/>
 
-      <PlayerControlsList />
+      <PlayerControlsList onPlayButtonClick={handlePlayButtonClick} isPlaying={isPlaying} progress={progress} />
     </div>
   );
 }
