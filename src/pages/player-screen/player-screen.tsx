@@ -19,6 +19,7 @@ function PlayerScreen(): JSX.Element {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [isFullScreen, setFullScreen] = useState<boolean>(false);
   const film = useAppSelector(getFilm);
   const isFilmLoaded = useAppSelector(getFilmLoadedStatus);
 
@@ -30,6 +31,10 @@ function PlayerScreen(): JSX.Element {
 
   const handlePlayButtonClick = () => {
     setIsPlaying((prev) => !prev);
+  };
+
+  const handleFullScrButtonClick = () => {
+    setFullScreen((prev) => !prev);
   };
 
   const handleTimeUpdate = (currentProgress: number, currTime: number) => {
@@ -62,9 +67,11 @@ function PlayerScreen(): JSX.Element {
             src={film.videoLink}
             poster={film.posterImage}
             isPlaying={isPlaying}
+            isFullScreen={isFullScreen}
             onPlayToogle={handlePlayButtonClick}
             onTimeUpdate={handleTimeUpdate}
             onLoadedMeta={handleLoadedMetaData}
+            onDropFullScr={setFullScreen}
           /> : ''
       }
 
@@ -72,6 +79,7 @@ function PlayerScreen(): JSX.Element {
 
       <PlayerControlsList
         onPlayButtonClick={handlePlayButtonClick}
+        onFullScrButtonClick={handleFullScrButtonClick}
         isPlaying={isPlaying}
         progress={progress}
         duration={duration}

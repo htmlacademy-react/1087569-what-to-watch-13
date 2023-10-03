@@ -2,13 +2,14 @@ import { formatTimeLeft } from '../../utils';
 
 type PlayerControlsListProps = {
   onPlayButtonClick:() => void;
+  onFullScrButtonClick:() => void;
   isPlaying: boolean;
   progress: number;
   duration: number;
   currentTime: number;
 }
 
-function PlayerControlsList({onPlayButtonClick, isPlaying, progress, duration, currentTime}: PlayerControlsListProps): JSX.Element {
+function PlayerControlsList({onPlayButtonClick, onFullScrButtonClick, isPlaying, progress, duration, currentTime}: PlayerControlsListProps): JSX.Element {
   const timeLeft = duration - currentTime;
 
   return(
@@ -42,7 +43,7 @@ function PlayerControlsList({onPlayButtonClick, isPlaying, progress, duration, c
         </button>
         <div className="player__name">Transpotting</div>
 
-        <button type="button" className="player__full-screen">
+        <button type="button" className="player__full-screen" onClick={onFullScrButtonClick}>
           <svg viewBox="0 0 27 27" width="27" height="27">
             <use xlinkHref="#full-screen"></use>
           </svg>

@@ -5,12 +5,14 @@ type VideoPlayerProps = {
   poster: string;
   isMuted?: boolean;
   isPlaying?: boolean;
+  isFullScreen?: boolean;
   onPlayToogle?: () => void;
   onTimeUpdate?: (progress: number, currTime: number) => void;
   onLoadedMeta?: (duration: number) => void;
+  onDropFullScr:(value: boolean) => void;
 }
 
-function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdate, onLoadedMeta}: VideoPlayerProps): JSX.Element {
+function VideoPlayer({src, poster, isMuted, isPlaying, isFullScreen, onPlayToogle, onTimeUpdate, onLoadedMeta, onDropFullScr}: VideoPlayerProps): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleTimeUpdate = () => {
@@ -52,6 +54,21 @@ function VideoPlayer({src, poster, isMuted, isPlaying, onPlayToogle, onTimeUpdat
 
   }, [isPlaying]);
 
+  useEffect(() => {
+    const playerElement = videoRef.current;
+
+    if (!playerElement) {
+      return;
+    }
+
+    if (isFullScreen) {
+      playerElement.requestFullscreen();
+    }
+
+    return () => {
+      onDropFullScr(false);
+    };
+  }, [isFullScreen, onDropFullScr]);
 
   return(
     <video
