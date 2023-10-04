@@ -57,6 +57,12 @@ export enum RequestStatus {
   Error = 'ERROR'
 }
 
+export enum VideoStatus {
+  Start = 'START',
+  Play = 'PLAY',
+  Pause = 'PAUSE'
+}
+
 export const MIN_COMMENT_LENGTH = 50;
 export const MAX_COMMENT_LENGTH = 400;
 export const RATING_VALUES_COUNT = 10;

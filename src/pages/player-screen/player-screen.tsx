@@ -77,14 +77,18 @@ function PlayerScreen(): JSX.Element {
 
       <ExitPlayerButton onClick={handleExitButtonClick}/>
 
-      <PlayerControlsList
-        onPlayButtonClick={handlePlayButtonClick}
-        onFullScrButtonClick={handleFullScrButtonClick}
-        isPlaying={isPlaying}
-        progress={progress}
-        duration={duration}
-        currentTime={currentTime}
-      />
+      {
+        film ?
+          <PlayerControlsList
+            onPlayButtonClick={handlePlayButtonClick}
+            onFullScrButtonClick={handleFullScrButtonClick}
+            filmName={film.name}
+            isPlaying={isPlaying}
+            progress={progress}
+            duration={duration}
+            currentTime={currentTime}
+          /> : ''
+      }
     </div>
   );
 }

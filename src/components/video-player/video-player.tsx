@@ -3,7 +3,6 @@ import { useRef, useEffect } from 'react';
 type VideoPlayerProps = {
   src: string;
   poster: string;
-  isMuted?: boolean;
   isPlaying?: boolean;
   isFullScreen?: boolean;
   onPlayToogle?: () => void;
@@ -12,7 +11,7 @@ type VideoPlayerProps = {
   onDropFullScr?:(value: boolean) => void;
 }
 
-function VideoPlayer({src, poster, isMuted, isPlaying, isFullScreen, onPlayToogle, onTimeUpdate, onLoadedMeta, onDropFullScr}: VideoPlayerProps): JSX.Element {
+function VideoPlayer({src, poster, isPlaying, isFullScreen, onPlayToogle, onTimeUpdate, onLoadedMeta, onDropFullScr}: VideoPlayerProps): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleTimeUpdate = () => {
@@ -45,7 +44,7 @@ function VideoPlayer({src, poster, isMuted, isPlaying, isFullScreen, onPlayToogl
       return;
     }
 
-    if (isPlaying) {
+    if (!isPlaying) {
       playerElement.play();
       return;
     }
@@ -79,7 +78,7 @@ function VideoPlayer({src, poster, isMuted, isPlaying, isFullScreen, onPlayToogl
       onLoadedMetadata={handleMetaData}
       src={src}
       poster={poster}
-      muted={isMuted}
+      muted
       autoPlay
     >
     </video>
