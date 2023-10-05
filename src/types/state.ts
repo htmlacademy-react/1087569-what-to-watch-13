@@ -15,6 +15,7 @@ export type TFilmsProcess = {
   activeGenre: string;
   isFilmsDataLoaded: boolean;
   hasError: boolean;
+  favoriteFilms: TFilm[];
 }
 
 export type TFilmProcess = {
