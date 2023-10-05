@@ -68,3 +68,8 @@ export const MAX_COMMENT_LENGTH = 400;
 export const RATING_VALUES_COUNT = 10;
 export const TIME_LEFT_FORMAT_MINUTES = '-mm:ss';
 export const TIME_LEFT_FORMAT_HOURS = '-HH:mm:ss';
+
+export enum FavoriteStatus {
+  Add = 1,
+  Delete = 0
+}

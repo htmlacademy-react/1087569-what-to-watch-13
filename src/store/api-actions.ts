@@ -8,7 +8,7 @@ import { TAuthData } from '../types/auth-data';
 import { TUserData } from '../types/user-data';
 import { saveToken, dropToken } from '../services/token';
 import { redirectToRoute } from './actions';
-import { NameSpace, APIRoute, AppRoute } from '../consts';
+import { NameSpace, APIRoute, AppRoute, FavoriteStatus } from '../consts';
 
 export const fetchFilmsAction = createAsyncThunk<TFilm[], undefined, {
   dispatch: TAppDispatch;
@@ -57,6 +57,45 @@ export const fetchPromoFilmAction = createAsyncThunk<TPromoFilm, undefined, {
   `${NameSpace.PromoFilm}/fetch`,
   async (_arg, {extra: api}) => {
     const {data} = await api.get<TPromoFilm>(APIRoute.Promo);
+
+    return data;
+  }
+);
+
+export const fetchFavoritesAction = createAsyncThunk<TFilm[], undefined, {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.FavoriteFilms}/fetch`,
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<TFilm[]>(APIRoute.Favorite);
+
+    return data;
+  }
+);
+
+export const addFavoriteAction = createAsyncThunk<TFilmDetail, TFilmDetail['id'], {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.FavoriteFilms}/add`,
+  async (id, {extra: api}) => {
+    const {data} = await api.post<TFilmDetail>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Add}`);
+
+    return data;
+  }
+);
+
+export const deleteFavoriteAction = createAsyncThunk<TFilmDetail, TFilmDetail['id'], {
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}>(
+  `${NameSpace.FavoriteFilms}/delete`,
+  async (id, {extra: api}) => {
+    const {data} = await api.post<TFilmDetail>(`${APIRoute.Favorite}/${id}/${FavoriteStatus.Delete}`);
 
     return data;
   }
