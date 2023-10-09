@@ -4,9 +4,18 @@ import { AppRoute, AuthorizationStatus } from '../../consts';
 type PrivateRouteProps = {
   authorizationStatus: AuthorizationStatus;
   children: JSX.Element;
+  isLoginPage?: boolean;
 }
 
-function PrivateRoute({authorizationStatus, children}: PrivateRouteProps): JSX.Element {
+function PrivateRoute({authorizationStatus, children, isLoginPage}: PrivateRouteProps): JSX.Element {
+  if(isLoginPage) {
+    return(
+      authorizationStatus === AuthorizationStatus.NoAuth
+        ? children
+        : <Navigate to={AppRoute.Main} />
+    );
+  }
+
   return(
     authorizationStatus === AuthorizationStatus.Auth
       ? children
