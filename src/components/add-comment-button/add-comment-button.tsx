@@ -3,14 +3,12 @@ import { AppRoute } from '../../consts';
 
 type AddCommentButtonProps = {
   id: string;
-  isAuthorized: boolean;
 }
 
-function AddCommentButton({id, isAuthorized}: AddCommentButtonProps): JSX.Element {
-  return (isAuthorized ?
+function AddCommentButton({id}: AddCommentButtonProps): JSX.Element {
+  return (
     <Link to={generatePath(AppRoute.AddReview, { id: id })} className="btn film-card__button">Add review</Link>
-    :
-    <Link to={AppRoute.SignIn} className="btn film-card__button">Add review</Link>);
+  );
 }
 
 export default AddCommentButton;
