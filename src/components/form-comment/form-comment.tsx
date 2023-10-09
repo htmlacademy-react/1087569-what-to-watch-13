@@ -70,6 +70,7 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
                   value={item}
                   onChange={handleRatingChange}
                   checked={+rating === item}
+                  disabled={sendingStatus === RequestStatus.Pending}
                 />
                 <label
                   className="rating__label"
@@ -89,13 +90,14 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
             name="review-text"
             id="review-text"
             placeholder="Review text"
+            disabled={sendingStatus === RequestStatus.Pending}
           >
           </textarea>
           <div className="add-review__submit">
             <button
               className="add-review__btn"
               type="submit"
-              disabled={!isValid || sendingStatus === RequestStatus.Success}
+              disabled={!isValid || sendingStatus === RequestStatus.Pending}
             >Post
             </button>
           </div>
