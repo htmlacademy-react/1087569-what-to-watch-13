@@ -73,3 +73,5 @@ export enum FavoriteStatus {
   Add = 1,
   Delete = 0
 }
+
+export const MAX_UNIC_GENRES = 9;
