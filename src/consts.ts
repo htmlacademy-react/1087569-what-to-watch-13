@@ -74,4 +74,5 @@ export enum FavoriteStatus {
   Delete = 0
 }
 
-export const MAX_UNIC_GENRES = 9;
+export const MAX_UNIC_GENRES_COUNT = 9;
+export const MAX_SIMILAR_FILMS_COUNT = 4;

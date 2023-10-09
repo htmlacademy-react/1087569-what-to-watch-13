@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { TFilm, TFilmDetail } from './types/film';
 import { TComment } from './types/comment';
-import { DEFAULT_GENRE, TIME_LEFT_FORMAT_HOURS, TIME_LEFT_FORMAT_MINUTES, MAX_UNIC_GENRES } from './consts';
+import { DEFAULT_GENRE, TIME_LEFT_FORMAT_HOURS, TIME_LEFT_FORMAT_MINUTES, MAX_UNIC_GENRES_COUNT } from './consts';
 
 dayjs.extend(duration);
 
@@ -65,7 +65,7 @@ export const formatTimeLeft = (timeLeft: number) => {
 export const getGenres = (films: TFilm[]) => {
   const genres = [DEFAULT_GENRE];
   const unicGenres = Array.from(new Set(films.map((film) => film.genre))).sort();
-  return unicGenres.length <= MAX_UNIC_GENRES ? genres.concat(unicGenres) : genres.concat(unicGenres.slice(0, MAX_UNIC_GENRES));
+  return unicGenres.length <= MAX_UNIC_GENRES_COUNT ? genres.concat(unicGenres) : genres.concat(unicGenres.slice(0, MAX_UNIC_GENRES_COUNT));
 };
 
 export const getFilmsByGenre = (films: TFilm[], activeGenre: string) => (

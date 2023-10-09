@@ -12,6 +12,7 @@ import { fetchSimilarFilmsAction } from '../../store/api-actions';
 import { getSimilarFilms } from '../../store/similar-films-process/similar-films-process.selectors';
 import { clearSimilarFilms } from '../../store/similar-films-process/similar-films-process.slice';
 import { useEffect } from 'react';
+import { MAX_SIMILAR_FILMS_COUNT } from '../../consts';
 
 function FilmScreen(): JSX.Element {
   const {id = ''} = useParams();
@@ -42,7 +43,7 @@ function FilmScreen(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <CardsList films={similarFilms}/>
+          <CardsList films={similarFilms} filmsCount={MAX_SIMILAR_FILMS_COUNT} />
         </section>
 
         <Footer />
