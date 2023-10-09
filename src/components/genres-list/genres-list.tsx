@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../hooks';
 import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { setActiveGenre, resetFilmsCount } from '../../store/films-process/films-process.slice';
+import { setActiveGenre } from '../../store/films-process/films-process.slice';
 import { AppRoute } from '../../consts';
 
 type GenresListProps = {
@@ -21,7 +21,6 @@ function GenresList({genres, activeGenre}: GenresListProps): JSX.Element {
     }
 
     dispatch(setActiveGenre(genre));
-    dispatch(resetFilmsCount());
   };
 
   return (

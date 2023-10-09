@@ -1,16 +1,14 @@
 import { TFilm } from '../../types/film';
 import MainCard from '../main-card/main-card';
-import { getFilmsCount } from '../../store/films-process/films-process.selectors';
-import { useAppSelector } from '../../hooks';
 import { useState, MouseEvent, useCallback } from 'react';
 
 type CardsListProps = {
   films: TFilm[];
+  filmsCount: number;
 }
 
-function CardsList({films}: CardsListProps): JSX.Element {
+function CardsList({films, filmsCount}: CardsListProps): JSX.Element {
   const [activeCard, setActiveCard] = useState<TFilm | undefined>(undefined);
-  const filmsCount = useAppSelector(getFilmsCount);
 
   const handleMouseEnterItem = useCallback((evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();

@@ -1,5 +1,5 @@
 import Logo from '../logo/logo';
-import { Link, generatePath } from 'react-router-dom';
+import { Link, generatePath, useNavigate } from 'react-router-dom';
 import { TFilmDetail } from '../../types/film';
 import cn from 'classnames';
 import { AppRoute } from '../../consts';
@@ -16,16 +16,20 @@ type HeaderProps = {
   isMyList?: boolean;
   filmId?: TFilmDetail['id'];
   filmName?: TFilmDetail['name'];
+  favoriteFilmsCount?: number;
 }
 
-function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, filmId, filmName }: HeaderProps): JSX.Element {
+function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, filmId, filmName, favoriteFilmsCount }: HeaderProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const userAvatarUrl = useAppSelector(getUserAvatar);
 
   const handleLogoutClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
     dispatch(logoutAction());
   };
+
+  const handleAvatarClick = () => navigate(AppRoute.MyList);
 
   return (
     <header className={cn(
@@ -35,6 +39,12 @@ function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, fi
     )}
     >
       <Logo />
+      {
+        isMyList ?
+          <h1 className="page-title user-page__title">
+            My list <span className="user-page__film-count">{favoriteFilmsCount}</span>
+          </h1> : ''
+      }
       {
         isCommentPage && filmId &&
         <nav className="breadcrumbs">
@@ -51,14 +61,14 @@ function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, fi
       {
         isAuthorized ?
           <ul className="user-block">
-            <li className="user-block__item">
+            <li className="user-block__item" onClick={handleAvatarClick}>
               <div className="user-block__avatar">
                 <img src={userAvatarUrl} alt="User avatar" width="63" height="63" />
               </div>
             </li>
             <li className="user-block__item">
               <Link
-                to={AppRoute.MyList}
+                to={AppRoute.Main}
                 className="user-block__link"
                 onClick={handleLogoutClick}
               >Sign out

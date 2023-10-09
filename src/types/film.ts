@@ -9,6 +9,9 @@ export type TFilm = {
 export type TFilmDetail = {
   id: string;
   name: string;
+  previewImage: string;
+  previewVideoLink: string;
+  genre: string;
   posterImage: string;
   backgroundImage: string;
   backgroundColor: string;
@@ -17,9 +20,8 @@ export type TFilmDetail = {
   rating: number;
   scoresCount: number;
   director: string;
-  starring: string[];
+  starring: [string];
   runTime: number;
-  genre: string;
   released: number;
   isFavorite: boolean;
 }

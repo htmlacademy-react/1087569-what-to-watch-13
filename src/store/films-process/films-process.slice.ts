@@ -1,15 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace, DEFAULT_GENRE, DEFAULT_FILMS_COUNT } from '../../consts';
+import { NameSpace, DEFAULT_GENRE } from '../../consts';
 import { TFilmsProcess } from '../../types/state';
-import { fetchFilmsAction, fetchFavoritesAction, addFavoriteAction, deleteFavoriteAction } from '../api-actions';
+import { fetchFilmsAction } from '../api-actions';
 
 const initialState: TFilmsProcess = {
   films: [],
-  filmsCount: DEFAULT_FILMS_COUNT,
   activeGenre: DEFAULT_GENRE,
   isFilmsDataLoaded: false,
-  hasError: false,
-  favoriteFilms: []
+  hasError: false
 };
 
 export const filmsProcess = createSlice({
@@ -18,12 +16,6 @@ export const filmsProcess = createSlice({
   reducers: {
     setActiveGenre: (state, action) => {
       state.activeGenre = action.payload as string;
-    },
-    changeFilmsCount: (state) => {
-      state.filmsCount += DEFAULT_FILMS_COUNT;
-    },
-    resetFilmsCount: (state) => {
-      state.filmsCount = DEFAULT_FILMS_COUNT;
     }
   },
   extraReducers(builder) {
@@ -38,22 +30,8 @@ export const filmsProcess = createSlice({
       .addCase(fetchFilmsAction.rejected, (state) => {
         state.isFilmsDataLoaded = false;
         state.hasError = true;
-      })
-      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
-        state.favoriteFilms = action.payload;
-      })
-      .addCase(addFavoriteAction.fulfilled, (state, action) => {
-        const updateFilmId = action.payload.id;
-        const updateFilm = state.films.find((film) => film.id === updateFilmId);
-        if (updateFilm) {
-          state.favoriteFilms.push(updateFilm);
-        }
-      })
-      .addCase(deleteFavoriteAction.fulfilled, (state, action) => {
-        const updateFilm = action.payload;
-        state.favoriteFilms = state.favoriteFilms.filter((offer) => offer.id !== updateFilm.id);
       });
   }
 });
 
-export const {setActiveGenre, changeFilmsCount, resetFilmsCount} = filmsProcess.actions;
+export const {setActiveGenre} = filmsProcess.actions;

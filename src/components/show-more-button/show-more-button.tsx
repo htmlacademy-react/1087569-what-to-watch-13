@@ -1,10 +1,13 @@
-import { useAppDispatch } from '../../hooks';
-import { changeFilmsCount } from '../../store/films-process/films-process.slice';
+import { DEFAULT_FILMS_COUNT } from '../../consts';
 
-function ShowMoreButton(): JSX.Element {
-  const dispatch = useAppDispatch();
+type ShowMoreButtonProps = {
+  filmsCount: number;
+  onClick: (filmsCount: number) => void;
+}
+
+function ShowMoreButton({filmsCount, onClick}: ShowMoreButtonProps): JSX.Element {
   const handleClick = () => {
-    dispatch(changeFilmsCount());
+    onClick(filmsCount + DEFAULT_FILMS_COUNT);
   };
 
   return (

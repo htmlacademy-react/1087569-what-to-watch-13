@@ -45,7 +45,7 @@ function PromoFilmCard(): JSX.Element {
               <span className="film-card__year">{promoFilm.released}</span>
             </p>
 
-            <FilmButtonsList id={promoFilm.id} isAuthorized={isAuthorized}/>
+            <FilmButtonsList id={promoFilm.id} isAuthorized={isAuthorized} />
           </div>
         </div>
       </div>}

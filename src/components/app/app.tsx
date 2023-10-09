@@ -9,7 +9,7 @@ import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute } from '../../consts';
-import { fetchFilmsAction, checkAuthAction } from '../../store/api-actions';
+import { fetchFilmsAction, checkAuthAction, fetchFavoritesAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {useEffect} from 'react';
 import HistoryRouter from '../history-route/history-route';
@@ -23,6 +23,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchFilmsAction());
+    dispatch(fetchFavoritesAction);
   }, [dispatch]);
 
   return(

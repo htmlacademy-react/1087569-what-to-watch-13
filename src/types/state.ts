@@ -11,11 +11,9 @@ export type TUserProcess = {
 
 export type TFilmsProcess = {
   films: TFilm[];
-  filmsCount: number;
   activeGenre: string;
   isFilmsDataLoaded: boolean;
   hasError: boolean;
-  favoriteFilms: TFilm[];
 }
 
 export type TFilmProcess = {
@@ -25,6 +23,10 @@ export type TFilmProcess = {
 
 export type TSimilarFilmsProcess = {
   similarFilms: TFilm [];
+}
+
+export type TFavoriteFilmsProcess = {
+  favoriteFilms: TFilm[];
 }
 
 export type TCommentsProcess = {
