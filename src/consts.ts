@@ -76,3 +76,5 @@ export enum FavoriteStatus {
 
 export const MAX_UNIC_GENRES_COUNT = 9;
 export const MAX_SIMILAR_FILMS_COUNT = 4;
+export const EMAIL_REGEXP = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+export const PASSWORD_REGEXP = /([0-9].*[a-zA-Z])|([a-zA-Z].*[0-9])/;

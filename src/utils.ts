@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { TFilm, TFilmDetail } from './types/film';
 import { TComment } from './types/comment';
-import { DEFAULT_GENRE, TIME_LEFT_FORMAT_HOURS, TIME_LEFT_FORMAT_MINUTES, MAX_UNIC_GENRES_COUNT } from './consts';
+import { DEFAULT_GENRE, TIME_LEFT_FORMAT_HOURS, TIME_LEFT_FORMAT_MINUTES, MAX_UNIC_GENRES_COUNT, EMAIL_REGEXP, PASSWORD_REGEXP } from './consts';
 
 dayjs.extend(duration);
 
@@ -71,3 +71,7 @@ export const getGenres = (films: TFilm[]) => {
 export const getFilmsByGenre = (films: TFilm[], activeGenre: string) => (
   activeGenre === DEFAULT_GENRE ? films : films.filter((film) => film.genre === activeGenre)
 );
+
+export const checkEmailValid = (email: string) => EMAIL_REGEXP.test(email);
+
+export const checkPasswordValid = (password: string) => PASSWORD_REGEXP.test(password);
