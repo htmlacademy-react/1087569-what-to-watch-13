@@ -7,6 +7,7 @@ import { AuthorizationStatus, RequestStatus } from '../consts';
 export type TUserProcess = {
   authorizationStatus: AuthorizationStatus;
   avatar: string;
+  hasError: boolean;
 }
 
 export type TFilmsProcess = {

@@ -2,14 +2,18 @@ import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { checkEmailValid, checkPasswordValid } from '../../utils';
+import { getErrorStatus } from '../../store/user-process/user-process.selectors';
+import { dropError } from '../../store/user-process/user-process.slice';
+import cn from 'classnames';
 
 function LoginScreen(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
+  const hasError = useAppSelector(getErrorStatus);
   const [isEmailError, setEmailError] = useState<boolean>(false);
   const [isPasswordError, setPasswordError] = useState<boolean>(false);
 
@@ -21,6 +25,8 @@ function LoginScreen(): JSX.Element {
       const password = passwordRef.current.value;
       const isEmailValid = checkEmailValid(email);
       const isPasswordValid = checkPasswordValid(password);
+      setEmailError(false);
+      setPasswordError(false);
 
       if (!isEmailValid) {
         setEmailError(true);
@@ -36,6 +42,8 @@ function LoginScreen(): JSX.Element {
           password: password
         }));
       }
+
+      dispatch(dropError());
     }
   };
 
@@ -55,8 +63,20 @@ function LoginScreen(): JSX.Element {
           action="#"
           className="sign-in__form"
         >
+          {
+            (isEmailError || isPasswordError || hasError) &&
+            <div className="sign-in__message">
+              {isEmailError && <p>Please enter a valid email address</p>}
+              {isPasswordError && <p>Please enter a valid password</p>}
+              {hasError && <p>We can’t recognize this email <br /> and password combination. Please try again.</p>}
+            </div>
+          }
           <div className="sign-in__fields">
-            <div className="sign-in__field">
+            <div className={cn(
+              'sign-in__field',
+              {'sign-in__field--error': isEmailError}
+            )}
+            >
               <input
                 ref={emailRef}
                 className="sign-in__input"
@@ -68,8 +88,11 @@ function LoginScreen(): JSX.Element {
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
-            {isEmailError && <div className="sign-in__message"><p>Please enter a valid email address</p></div>}
-            <div className="sign-in__field">
+            <div className={cn(
+              'sign-in__field',
+              {'sign-in__field--error': isPasswordError}
+            )}
+            >
               <input
                 ref={passwordRef}
                 className="sign-in__input"
@@ -81,7 +104,6 @@ function LoginScreen(): JSX.Element {
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
-            {isPasswordError && <div className="sign-in__message"><p>Please enter a valid password</p></div>}
           </div>
           <div className="sign-in__submit">
             <button className="sign-in__btn" type="submit">Sign in</button>

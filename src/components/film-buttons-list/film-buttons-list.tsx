@@ -16,7 +16,7 @@ function FilmButtonsList({id, isAuthorized}: FilmButtonsListProps): JSX.Element 
   return (
     <div className="film-card__buttons">
       <PlayButton id={id} />
-      <FavoriteButton id={id} />
+      {isAuthorized && <FavoriteButton id={id} />}
       {!isMainPage && isAuthorized && <AddCommentButton id={id} />}
     </div>
   );

@@ -5,13 +5,18 @@ import { loginAction, logoutAction, checkAuthAction } from '../api-actions';
 
 const initialState: TUserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  avatar: ''
+  avatar: '',
+  hasError: false
 };
 
 export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    dropError: (state) => {
+      state.hasError = false;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.fulfilled, (state, actions) => {
@@ -27,9 +32,12 @@ export const userProcess = createSlice({
       })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
+        state.hasError = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       });
   }
 });
+
+export const {dropError} = userProcess.actions;
