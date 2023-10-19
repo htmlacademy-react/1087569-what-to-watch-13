@@ -28,6 +28,8 @@ export type TSimilarFilmsProcess = {
 
 export type TFavoriteFilmsProcess = {
   favoriteFilms: TFilm[];
+  hasChangeStatusError: boolean;
+  hasLoadedError: boolean;
 }
 
 export type TCommentsProcess = {

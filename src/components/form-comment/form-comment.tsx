@@ -42,13 +42,14 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
     if (sendingStatus === RequestStatus.Success) {
       setComment('');
       setRating('');
-      dispatch(dropSendingStatus());
       navigate(`${APIRoute.Films}/${filmId}?tab=${Tabs.Reviews}`);
     }
 
     if (sendingStatus === RequestStatus.Error) {
       setErrorMessage('Posting a comment is currently not possible. Please try again.');
     }
+
+    dispatch(dropSendingStatus());
   }, [sendingStatus, dispatch, navigate, filmId]);
 
   return (
