@@ -57,14 +57,11 @@ export enum RequestStatus {
   Error = 'ERROR'
 }
 
-export enum VideoStatus {
-  Start = 'START',
-  Play = 'PLAY',
-  Pause = 'PAUSE'
+export enum CommentLengthLimit {
+  Min = 50,
+  Max = 400
 }
 
-export const MIN_COMMENT_LENGTH = 50;
-export const MAX_COMMENT_LENGTH = 400;
 export const RATING_VALUES_COUNT = 10;
 export const TIME_LEFT_FORMAT_MINUTES = '-mm:ss';
 export const TIME_LEFT_FORMAT_HOURS = '-HH:mm:ss';

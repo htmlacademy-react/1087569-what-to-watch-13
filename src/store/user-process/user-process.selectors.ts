@@ -1,8 +1,6 @@
 import { NameSpace } from '../../consts';
 import { TState } from '../../types/state';
-import { AuthorizationStatus } from '../../consts';
 
 export const getAuthorizationStatus = (state: TState) => state[NameSpace.User].authorizationStatus;
-export const getAuthCheckedStatus = (state: TState): boolean => state[NameSpace.User].authorizationStatus !== AuthorizationStatus.Unknown;
 export const getUserAvatar = (state: TState): string => state[NameSpace.User].avatar;
 export const getErrorStatus = (state: TState): boolean => state[NameSpace.User].hasError;

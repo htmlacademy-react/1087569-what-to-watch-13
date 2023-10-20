@@ -3,15 +3,15 @@ import CardsList from '../cards-list/cards-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks';
 import { getActiveGenre } from '../../store/films-process/films-process.selectors';
-import { getFilms } from '../../store/films-process/films-process.selectors';
-import { getGenres, getFilmsByGenre } from '../../utils';
+import { getFilms, getUnicGenres } from '../../store/films-process/films-process.selectors';
+import { getFilmsByGenre } from '../../utils';
 import { useState, useEffect } from 'react';
 import { DEFAULT_FILMS_COUNT } from '../../consts';
 
 function Catalog(): JSX.Element {
   const activeGenre = useAppSelector(getActiveGenre);
   const films = useAppSelector(getFilms);
-  const genres = getGenres(films);
+  const genres = useAppSelector(getUnicGenres);
   const filmsByGenre = getFilmsByGenre(films, activeGenre);
   const [filmsCount, setFilmsCount] = useState(DEFAULT_FILMS_COUNT);
 
