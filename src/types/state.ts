@@ -7,6 +7,7 @@ import { AuthorizationStatus, RequestStatus } from '../consts';
 export type TUserProcess = {
   authorizationStatus: AuthorizationStatus;
   avatar: string;
+  hasError: boolean;
 }
 
 export type TFilmsProcess = {
@@ -27,6 +28,8 @@ export type TSimilarFilmsProcess = {
 
 export type TFavoriteFilmsProcess = {
   favoriteFilms: TFilm[];
+  hasChangeStatusError: boolean;
+  hasLoadedError: boolean;
 }
 
 export type TCommentsProcess = {

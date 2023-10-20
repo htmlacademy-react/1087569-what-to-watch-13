@@ -6,7 +6,7 @@ import FilmDetails from '../film-details/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
 import { TFilmDetail } from '../../types/film';
 import { TComment } from '../../types/comment';
-import { upperCaseFirst } from '../../utils';
+import { transformUpperCaseFirst } from '../../utils';
 
 type TabsProps = {
   film: TFilmDetail;
@@ -30,7 +30,7 @@ function TabsList({film, comments}: TabsProps): JSX.Element {
                 { 'film-nav__item--active': activeTab === tab }
               )}
             >
-              <Link to={`${pathname}?tab=${tab}`} className="film-nav__link">{upperCaseFirst(tab)}</Link>
+              <Link to={`${pathname}?tab=${tab}`} className="film-nav__link">{transformUpperCaseFirst(tab)}</Link>
             </li>
           ))}
         </ul>

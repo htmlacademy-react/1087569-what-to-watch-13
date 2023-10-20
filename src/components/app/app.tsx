@@ -23,7 +23,7 @@ function App(): JSX.Element {
   useEffect(() => {
     dispatch(checkAuthAction());
     dispatch(fetchFilmsAction());
-    dispatch(fetchFavoritesAction);
+    dispatch(fetchFavoritesAction());
   }, [dispatch]);
 
   return(
@@ -45,7 +45,7 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.SignIn}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus} isLoginPage >
+              <PrivateRoute authorizationStatus={authorizationStatus} isLoginPage>
                 <LoginScreen />
               </PrivateRoute>
             }

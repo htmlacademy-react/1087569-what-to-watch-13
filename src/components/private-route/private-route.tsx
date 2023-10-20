@@ -7,7 +7,7 @@ type PrivateRouteProps = {
   isLoginPage?: boolean;
 }
 
-function PrivateRoute({authorizationStatus, children, isLoginPage}: PrivateRouteProps): JSX.Element {
+function PrivateRoute({authorizationStatus, children, isLoginPage}: PrivateRouteProps): JSX.Element | null {
   if(isLoginPage) {
     return(
       authorizationStatus === AuthorizationStatus.NoAuth
@@ -16,11 +16,14 @@ function PrivateRoute({authorizationStatus, children, isLoginPage}: PrivateRoute
     );
   }
 
+  if(authorizationStatus === AuthorizationStatus.Unknown) {
+    return null;
+  }
+
   return(
     authorizationStatus === AuthorizationStatus.Auth
       ? children
       : <Navigate to={AppRoute.SignIn} />
   );
 }
-
 export default PrivateRoute;

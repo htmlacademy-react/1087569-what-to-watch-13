@@ -34,7 +34,7 @@ function Header({ isAuthorized, isPromo, isFilmPage, isCommentPage, isMyList, fi
   return (
     <header className={cn(
       'page-header',
-      { 'film-card__head': isAuthorized && isPromo || isFilmPage },
+      { 'film-card__head': isPromo || isFilmPage },
       {'user-page__head': isMyList}
     )}
     >

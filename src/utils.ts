@@ -44,7 +44,7 @@ export const formatFilmRunTime = (runTime: TFilmDetail['runTime']) => {
   return `${runTime}m`;
 };
 
-export const upperCaseFirst = (str: string) => {
+export const transformUpperCaseFirst = (str: string) => {
   if (!str) {
     return str;
   }

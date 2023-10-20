@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState, Fragment, useEffect } from 'react';
-import { RATING_VALUES_COUNT, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH, RequestStatus, APIRoute, Tabs } from '../../consts';
+import { RATING_VALUES_COUNT, CommentLengthLimit, RequestStatus, APIRoute, Tabs } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getSendingCommentStatus } from '../../store/comments-process/comments.process.selectors';
 import { postCommentAction } from '../../store/api-actions';
@@ -21,8 +21,8 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
   const preparedRatingValues = Array.from({length: RATING_VALUES_COUNT}, (_v, k) => k + 1).reverse();
 
   const isValid =
-    comment.length >= MIN_COMMENT_LENGTH &&
-    comment.length <= MAX_COMMENT_LENGTH &&
+    comment.length >= CommentLengthLimit.Min &&
+    comment.length <= CommentLengthLimit.Max &&
     rating !== '';
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -42,13 +42,14 @@ function FormComment({filmId}: FormCommentProps): JSX.Element {
     if (sendingStatus === RequestStatus.Success) {
       setComment('');
       setRating('');
-      dispatch(dropSendingStatus());
       navigate(`${APIRoute.Films}/${filmId}?tab=${Tabs.Reviews}`);
     }
 
     if (sendingStatus === RequestStatus.Error) {
       setErrorMessage('Posting a comment is currently not possible. Please try again.');
     }
+
+    dispatch(dropSendingStatus());
   }, [sendingStatus, dispatch, navigate, filmId]);
 
   return (

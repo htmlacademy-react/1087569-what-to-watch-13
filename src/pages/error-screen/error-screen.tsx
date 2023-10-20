@@ -1,16 +1,24 @@
 import { useAppDispatch } from '../../hooks';
-import { fetchFilmsAction } from '../../store/api-actions';
+import { fetchFilmsAction, fetchFavoritesAction } from '../../store/api-actions';
 
-function ErrorScreen(): JSX.Element {
+type ErrorScreenProps = {
+  isMyList?: boolean;
+}
+
+function ErrorScreen({isMyList}: ErrorScreenProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
+    if (isMyList) {
+      dispatch(fetchFavoritesAction());
+    }
+
     dispatch(fetchFilmsAction());
   };
 
   return (
     <>
-      <p className="error__text">Не удалось загрузить вопросы</p>
+      <p className="error__text">Не удалось загрузить фильмы</p>
       <button
         onClick={handleClick}
         className="replay replay--error"

@@ -21,17 +21,13 @@ function PromoFilmCard(): JSX.Element {
     <section className="film-card">
 
       <div className="film-card__bg">
-        {
-          promoFilm && isAuthorized ?
-            <img src={promoFilm.backgroundImage} alt={promoFilm.name} /> :
-            <img src="img/bg-header.jpg" />
-        }
+        { promoFilm && <img src={promoFilm.backgroundImage} alt={promoFilm.name} />}
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
 
       <Header isAuthorized={isAuthorized} isPromo />
-      { promoFilm && isAuthorized &&
+      { promoFilm &&
       <div className="film-card__wrap">
         <div className="film-card__info">
           <div className="film-card__poster">
